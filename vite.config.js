@@ -7,4 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/SEMEI/', // <-- Adicionado para resolver o caminho no GitHub Pages
 })
