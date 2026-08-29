@@ -25,12 +25,11 @@ jobs:
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
-        uses-with:
+        with:
           node-version: 20
-          cache: 'npm'
 
       - name: Instalar dependências
-        run: npm ci
+        run: npm install
 
       - name: Fazer o Build da aplicação
         run: npm run build
@@ -41,7 +40,7 @@ jobs:
       - name: Upload do Build
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Pasta onde o Vite gera os arquivos compilados
+          path: './dist'
 
       - name: Deploy para o GitHub Pages
         id: deployment
