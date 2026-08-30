@@ -2,17 +2,16 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   FiMenu,
-  FiUserPlus,
   FiSearch,
   FiUsers,
   FiMessageSquare,
   FiList
 } from 'react-icons/fi';
 
-export default function Chat({ onAbrirConversa }) {
+export default function Chat({ onAbrirConversa, onMudarTela }) {
   const [filtroAtivo, setFiltroAtivo] = useState('todas');
   const [busca, setBusca] = useState('');
-  const [tabAtiva, setTabAtiva] = useState('chat');
+  const [tabAtiva, setTabAtiva] = useState('chat'); // Começa na aba chat
 
   const conversas = [
     {
@@ -75,13 +74,29 @@ export default function Chat({ onAbrirConversa }) {
     <div className="bg-black text-white h-full flex flex-col font-sans relative overflow-hidden">
 
       {/* --- TOPO --- */}
-      <header className="flex items-center justify-between px-4 py-4 border-b border-zinc-800 shrink-0">
+      <header className="flex items-center justify-between px-4 py-4 border-b border-zinc-800">
         <button className="text-zinc-300 hover:text-purple-500 transition cursor-pointer">
           <FiMenu size={24} />
         </button>
         <h1 className="text-lg font-bold tracking-wide text-purple-400">SEMEI</h1>
-        <button className="text-zinc-300 hover:text-purple-500 transition cursor-pointer" title="Salvar Contatos">
-          <FiUserPlus size={22} />
+        
+        {/* Botão de Editar com o seu SVG personalizado em Roxo */}
+        <button 
+          className="text-purple-400 hover:text-purple-300 transition cursor-pointer p-1" 
+          title="Editar"
+        >
+          <svg 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            className="w-5 h-5 stroke-purple-400 hover:stroke-purple-300 transition"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none"></path>
+            <polygon points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" fill="none"></polygon>
+          </svg>
         </button>
       </header>
 
@@ -158,7 +173,10 @@ export default function Chat({ onAbrirConversa }) {
       {/* --- TABBAR FLUTUANTE --- */}
       <nav className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-zinc-900/90 backdrop-blur-md border border-zinc-800/80 rounded-full px-6 py-3 flex justify-between items-center shadow-2xl z-50">
         <button
-          onClick={() => setTabAtiva('comunidade')}
+          onClick={() => {
+            setTabAtiva('comunidade');
+            if (onMudarTela) onMudarTela('comunidade');
+          }}
           className={`flex flex-col items-center gap-1 transition cursor-pointer ${tabAtiva === 'comunidade' ? 'text-purple-500' : 'text-zinc-400 hover:text-zinc-200'}`}
         >
           <FiUsers size={20} />
@@ -166,7 +184,10 @@ export default function Chat({ onAbrirConversa }) {
         </button>
 
         <button
-          onClick={() => setTabAtiva('chat')}
+          onClick={() => {
+            setTabAtiva('chat');
+            if (onMudarTela) onMudarTela('chat');
+          }}
           className={`flex flex-col items-center gap-1 transition cursor-pointer ${tabAtiva === 'chat' ? 'text-purple-500' : 'text-zinc-400 hover:text-zinc-200'}`}
         >
           <FiMessageSquare size={20} />
@@ -174,7 +195,10 @@ export default function Chat({ onAbrirConversa }) {
         </button>
 
         <button
-          onClick={() => setTabAtiva('lista')}
+          onClick={() => {
+            setTabAtiva('lista');
+            if (onMudarTela) onMudarTela('lista');
+          }}
           className={`flex flex-col items-center gap-1 transition cursor-pointer ${tabAtiva === 'lista' ? 'text-purple-500' : 'text-zinc-400 hover:text-zinc-200'}`}
         >
           <FiList size={20} />
